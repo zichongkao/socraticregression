@@ -25,9 +25,9 @@ The Gauss-Markov theorem says: This problem is way too hard. I can’t tell you 
 
 ---—
 
-We start with a 3 dimensional space with a plane in it. The plane represents the $$X$$ matrix. 
+We start with a 3 dimensional space with a plane in it. The plane represents the $$X$$ matrix.
 
-[diagram]
+<img src="img/xplane.png">
 
 ## What is $$X$$ and why is it represented by a plane?
 
@@ -43,7 +43,7 @@ $$
 
 This leads us to a third geometric view of X. Since X is a transformation, we can visualize it as the space of all its possible outputs. At first you might wonder: There are so many possible outputs of X. How do I visualize this? It turns out that linear algebra has good tools for this. Recall that the space of all possible outputs is the space of all possible linear combinations of X’s columns. In the language of linear algebra, we call this the space _spanned_ by the column vectors, or the column space for short.
 
-[diagram showing x_i’s as basis vectors of the plane]
+<img src="img/xspan.png">
 
 Since $$X$$ is tall and skinny, it has a few tall column vectors. This tells us that the column vectors live in a high-dimensional space and that there are not enough of them to span it. Therefore, the column space is a subspace of the main space. Since we’re limited to imagining the main space in 3 dimensions, the column space of $$X$$ is best represented by a 2 dimensional subspace, a plane.
 
@@ -62,11 +62,11 @@ That's not all. This picture is incomplete because it only shows one observation
 
 The solution is to consider the entire distribution of $$\epsilon$$. Each point in this cloud is a possible observation of $$y$$. Here, we've modeled $$\epsilon$$ as a 3 dimension gaussian.
 
-[cloud diagram]
+<img src="img/cloud.png">
 
 This is still not good enough. Clouds are not so great to reason about because they are irregular and don't have nice boundaries. Instead, let's abstract the randomness away by using confidence intervals. The sphere below is essentially a 3 dimensional confidence interval that works just as well to help us understand where the $$y$$s might lie.
 
-[circle diagram]
+<img src="img/sphere.png">
 
 When we were working with a single observation of $$y$$, the problem of linear regression was just about mapping that it onto the plane as closely as possible to $$X\beta$$. Now that we are working with a sphere of $$y$$s, we can restate the problem more generally to be a way to mapping the sphere on to the plane so that the resulting area is as closely bunched around $$X\beta$$ as possible.
 
