@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville|    Roboto:700,500,300|Roboto+Condensed">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <title>Socratic Regression</title>
+  </head>
+  <body>
+    <div id="column">
+      <h1 id="socratic-regression">Socratic Regression</h1>
+
+<h2 id="whats-socratic-regression">What’s Socratic Regression?</h2>
+
+<p>It is an attempt to develop an intuitive understanding of linear regression using Socratic questioning. The starting point for this project was a <a href="https://web.archive.org/web/20040213071852/http://emlab.berkeley.edu/GMTheorem/index.html">geometric proof of the Gauss-Markov theorem</a> which appealed to me as a visual learner. While examining it, I found myself running through lines of questioning in my head which made me realize that Socratic questioning is a more natural way to learn the subject than the traditional ground-up, proof-based approach.</p>
+
+<h2 id="whats-this-gauss-markov-theorem-you-speak-of-how-is-it-relevant-to-linear-regression">What’s this Gauss-Markov theorem you speak of? How is it relevant to linear regression?</h2>
+
+<p>The Gauss-Markov theorem is a good jump-off point from which to learn about linear regression. There are many ways to fit a line through data, of which ordinary least squares (OLS) is the most well-known. (What! I didn’t realize there are other ways to fit a line?! What are some examples? Generalized least squares (GLS), maximum likelihood estimation (MLE), etc.) The Gauss-Markov theorem explains that under certain conditions, OLS is the “best” method to use.</p>
+
+<p>This is interesting in two ways. First, it helps us understand why everyone seems to like using OLS when doing linear regression. Second, like a big fish in a small pond, OLS is only best in a very narrow sense — it requires several strong conditions and is only best in a small class of methods. By tearing down the various conditions and probing why it can’t compete outside of its class, we end up with a good understanding of linear regression.</p>
+
+<h2 id="so-what-does-it-mean-for-ols-to-be-best-and-what-the-conditions-are-required-for-this">So what does it mean for OLS to be “best”? And what the conditions are required for this?</h2>
+
+<p>Recall, the problem of linear regression says: Suppose we have data that is generated in the secret control room of the universe** by the function <script type="math/tex">X\beta + \epsilon</script>. What is the best way to find <script type="math/tex">\beta</script>? Remember that as mere mortals, we can never peek into the secret control room of the universe (SCRU). We can only observe <script type="math/tex">y</script>, final result of <script type="math/tex">X\beta + \epsilon</script>, and <script type="math/tex">X</script> which are our inputs. <script type="math/tex">\beta</script> is top secret so we can’t just read it off our observations, and <script type="math/tex">\epsilon</script> is a random variable which prevents us from deducing \beta from what we know. We are forced to guess what it is and this process of guessing parameters of underlying models is known in statistics as “estimation”.</p>
+
+<p>The Gauss-Markov theorem says: This problem is way too hard. I can’t tell you the best estimator for <script type="math/tex">\beta</script> in all cases; but for the cases where the noise <script type="math/tex">\epsilon</script> is distributed with <script type="math/tex">\mathbb{E}(\epsilon) = 0</script> and <script type="math/tex">\mathbb{Var}(\epsilon) = \sigma^2 I</script>, then I can tell you that OLS is the best among the class of <em>linear</em>, <em>unbiased</em> estimators.</p>
+
+<p>[Some people familiar with regression may ask: Don’t we also need the condition that the data is correctly modeled by <script type="math/tex">X\beta</script>? In my view, this condition is unnecessary because it is part of the setup of the problem.]</p>
+
+<p>——</p>
+
+<p>We start with a 3 dimensional space with a plane in it. The plane represents the <script type="math/tex">X</script> matrix.</p>
+
+<p>[diagram]</p>
+
+<h2 id="what-is-x-and-why-is-it-represented-by-a-plane">What is <script type="math/tex">X</script> and why is it represented by a plane?</h2>
+
+<p>One superficial view of the <script type="math/tex">X</script> matrix is as a store of data where each row stores the covariates of a single data point. <script type="math/tex">X</script> is tall and skinny because it must have at least as many data points as it has covariates. This is reminiscent of what we know from high school algebra about systems of equations. Each equations provides information about the relationship between the inputs and outputs, and if we have more unknowns than we have equations, we won’t have enough information to find a unique solution for the unknowns.</p>
+
+<p>[diagram showing shapes of y = X\beta]</p>
+
+<p>We can also view <script type="math/tex">X</script> as a linear transformation since we can feed it a vector and have it spit out another. More concretely, it takes in a <script type="math/tex">\beta</script> vector and uses the vector’s components as weights for building a linear combination of its columns. This linear combination is then output as the vector of predictions <script type="math/tex">y</script>. I like to think of <script type="math/tex">X</script> as a fridge where each column is an ingredient. <script type="math/tex">\beta</script> is a recipe which tells us how much of each ingredient to mix together.</p>
+
+<script type="math/tex; mode=display">y = X \beta = \beta_1 \begin{bmatrix} | \\ x_1 \\ | \end{bmatrix} + \beta_2 \begin{bmatrix} | \\ x_2 \\ | \end{bmatrix} + … + \beta_i \begin{bmatrix} | \\ x_i \\ | \end{bmatrix}</script>
+
+<p>This leads us to a third geometric view of X. Since X is a transformation, we can visualize it as the space of all its possible outputs. At first you might wonder: There are so many possible outputs of X. How do I visualize this? It turns out that linear algebra has good tools for this. Recall that the space of all possible outputs is the space of all possible linear combinations of X’s columns. In the language of linear algebra, we call this the space <em>spanned</em> by the column vectors, or the column space for short.</p>
+
+<p>[diagram showing x_i’s as basis vectors of the plane]</p>
+
+<p>Since <script type="math/tex">X</script> is tall and skinny, it has a few tall column vectors. This tells us that the column vectors live in a high-dimensional space and that there are not enough of them to span it. Therefore, the column space is a subspace of the main space. Since we’re limited to imagining the main space in 3 dimensions, the column space of <script type="math/tex">X</script> is best represented by a 2 dimensional subspace, a plane.</p>
+
+<h2 id="alright-so-we-have-this-plane-how-does-the-problem-of-linear-regression-look-like-in-this-picture">Alright, so we have this plane. How does the problem of linear regression look like in this picture?</h2>
+
+<p>Recall that the <script type="math/tex">X</script> plane consists of all possible outputs of <script type="math/tex">X</script> including the output of the One True <script type="math/tex">\beta</script>. This <script type="math/tex">\beta</script> was generated in the SCRU so we can’t observe the vector it produces. What we do observe comes one step later after obscuring noise, <script type="math/tex">\epsilon</script>, is added.</p>
+
+<p>[diagram showing vector X\beta, label it as unobservable, show vector \epsilon added to it, and label X\beta + \epsilon as observable]</p>
+
+<p>The problem of linear regression is to estimate a <script type="math/tex">\hat{\beta}</script> which produces an <script type="math/tex">X\hat{\beta}</script> as close as possible to <script type="math/tex">X\beta</script>, based on the <script type="math/tex">X\beta + \epsilon</script> that we observe. In case it isn’t clear, <script type="math/tex">\hat{\beta}</script>, pronounced “beta hat”, uses the standard “hat notation” to show that it is an estimator of the SCRU value.</p>
+
+<p>[diagram showing vector X\beta and X\hat{\beta}, mark what is observable and what is not]</p>
+
+<p>That’s not all. This picture is incomplete because it only shows one observation of <script type="math/tex">y</script>.Remember that <script type="math/tex">y</script> consists of the pure, consummate <script type="math/tex">X\beta</script> combined with a chaotic <script type="math/tex">\epsilon</script>. Since <script type="math/tex">epsilon</script> is a random variable, each time we observe <script type="math/tex">y</script>, it gives a different value. We don’t want to find a method of estimation that only works well on a lucky realization of <script type="math/tex">\epsilon</script>, we want it to work well on aggregate.</p>
+
+<p>The solution is to consider the entire distribution of <script type="math/tex">\epsilon</script>. Each point in this cloud is a possible observation of <script type="math/tex">y</script>. Here, we’ve modeled <script type="math/tex">\epsilon</script> as a 3 dimension gaussian.</p>
+
+<p>[cloud diagram]</p>
+
+<p>This is still not good enough. Clouds are not so great to reason about because they are irregular and don’t have nice boundaries. Instead, let’s abstract the randomness away by using confidence intervals. The sphere below is essentially a 3 dimensional confidence interval that works just as well to help us understand where the <script type="math/tex">y</script>s might lie.</p>
+
+<p>[circle diagram]</p>
+
+<p>When we were working with a single observation of <script type="math/tex">y</script>, the problem of linear regression was just about mapping that it onto the plane as closely as possible to <script type="math/tex">X\beta</script>. Now that we are working with a sphere of <script type="math/tex">y</script>s, we can restate the problem more generally to be a way to mapping the sphere on to the plane so that the resulting area is as closely bunched around <script type="math/tex">X\beta</script> as possible.</p>
+
+<h2 id="presumably-ols-is-one-of-the-ways-to-estimate-a-hatbeta-how-does-does-the-ols-estimate-look-like">Presumably, OLS is one of the ways to estimate a <script type="math/tex">\hat{\beta}</script>. How does does the OLS estimate look like?</h2>
+
+<p>Pictorially, the OLS estimate is the orthogonal projection of y onto to the X plane.</p>
+
+<p>[diagram showing X\hat{\beta}_{OLS} as the orthogonal projection of y onto the X plane]</p>
+
+<p>It’s easy to see why this is the case. <script type="math/tex">\hat{\beta}_{OLS}</script> is derived by minimizing the squared distance between <script type="math/tex">y</script> and <script type="math/tex">X\hat{\beta}_{OLS}</script>. Given a <script type="math/tex">y</script> vector and the plane <script type="math/tex">X</script>, and since the squared distance is basically the standard cartesian distance that we’re familiar with, the nearest point on <script type="math/tex">X</script> is <script type="math/tex">y</script> is clearly the orthogonal projection.</p>
+
+<p>[diagram zoomed in, showing y vector above, plane below, show that the point directly below is is the nearest]</p>
+
+<h2 id="now-we-know-how-the-ols-estimator-looks-like-in-the-picture-is-there-a-geometric-way-to-see-why-it-is-the-blue-estimator">Now we know how the OLS estimator looks like in the picture. Is there a geometric way to see why it is the BLUE estimator?</h2>
+
+    </div>
+  </body>
+</html>
