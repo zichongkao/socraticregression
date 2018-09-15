@@ -17,6 +17,7 @@ h2 {
 }
 
 h3 {
+    margin-top: 1em;
     display: block;
     font-size: 1.17em;
 }
@@ -55,4 +56,42 @@ body #column {
 
 .content img {
     width: 100%
+}
+
+.header {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.header .logo {
+    height: 120px;
+}
+
+.header .wording {
+    margin-left: 0.5em;
+    margin-top: 1em;
+}
+
+.header .title {
+    display: inline-block;
+    font-family: 'Roboto Condensed',sans-serif;
+    color: #333;
+    font-weight: 800;
+    font-size: 2em;
+}
+
+.header .caption {
+    display: inline-block;
+    font-family: 'Roboto Condensed',sans-serif;
+    color: #555;
+    font-weight: 800;
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+
+.footer {
+    margin-top: 6em;
+    font-family: 'Roboto',sans-serif;
+    color: #333;
+    font-weight: 200;
 }

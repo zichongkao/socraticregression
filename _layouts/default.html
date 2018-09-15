@@ -2,14 +2,25 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville|    Roboto:700,500,300|Roboto+Condensed">
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <title>{{ page.title }}</title>
   </head>
   <body>
     <div id="column">
+      <div class="header">
+        <a href="/"><img class="logo" src="img/socrates3.png"></a>
+        <div class="wording">
+          <a href="/"><div class="title">Socratic Regression</div></a>
+          <div class="caption">A Geometric Interpretation of Linear Regression</div>
+        </div>
+      </div>
       <div class="content">
         {{ content }}
+      </div>
+      <div class="footer">
+        This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons License</a> that allows sharing and adapting for non-commercial purposes, but requires attribution.
       </div>
     </div>
   </body>
