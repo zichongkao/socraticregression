@@ -77,21 +77,73 @@
 
 <p><img src="img/sphere.png" /></p>
 
-<p>When we were working with a single observation of <script type="math/tex">y</script>, the problem of linear regression was just about mapping that it onto the plane as closely as possible to <script type="math/tex">X\beta</script>. Now that we are working with a region of <script type="math/tex">y</script>s, we can restate the problem more generally as finding a way to map the confidence region on to the plane so that the resulting area is as closely bunched around <script type="math/tex">X\beta</script> as possible.</p>
-
-<p><img src="img/sphereshadow.png" /></p>
+<p>When we were working with a single observation of <script type="math/tex">y</script>, the problem of linear regression was just about mapping it onto the plane, producing a <script type="math/tex">X\hat{\beta}</script> which lies as near to <script type="math/tex">X\beta</script> as possible. Now that we are working with a region of <script type="math/tex">y</script>s, we can restate the problem more generally as finding a way to map the confidence region on to the plane so that the resulting area of <script type="math/tex">X\hat{\beta}</script> is as closely bunched around <script type="math/tex">X\beta</script> as possible.</p>
 
 <h3 id="presumably-ols-is-one-of-the-ways-to-estimate-a-hatbeta-how-does-does-the-ols-estimate-look-like">Presumably, OLS is one of the ways to estimate a <script type="math/tex">\hat{\beta}</script>. How does does the OLS estimate look like?</h3>
 
-<p>Pictorially, the OLS estimate is the orthogonal projection of y onto to the X plane.</p>
+<p>Geometrically, the OLS estimate is the orthogonal projection of y onto to the X plane.</p>
 
 <p><img src="img/ols.png" /></p>
 
-<p>It’s easy to see why this is the case. <script type="math/tex">\hat{\beta}_{OLS}</script> is derived by minimizing the squared distance between <script type="math/tex">y</script> and <script type="math/tex">X\hat{\beta}_{OLS}</script>. Given a <script type="math/tex">y</script> vector and the plane <script type="math/tex">X</script>, and since the squared distance is basically the standard cartesian distance that we’re familiar with, the nearest point on <script type="math/tex">X</script> is <script type="math/tex">y</script> is clearly the orthogonal projection.</p>
+<p>Again, the more realistic picture is the orthogonal projection of the y cloud onto the X plane.</p>
 
-<p>[diagram zoomed in, showing y vector above, plane below, show that the point directly below is is the nearest]</p>
+<p><img src="img/sphereols.png" /></p>
 
-<h3 id="now-we-know-how-the-ols-estimator-looks-like-in-the-picture-is-there-a-geometric-way-to-see-why-it-is-the-blue-estimator">Now we know how the OLS estimator looks like in the picture. Is there a geometric way to see why it is the BLUE estimator?</h3>
+<h3 id="okay-but-why-does-ols-result-in-an-orthogonal-projection">Okay, but why does OLS result in an orthogonal projection?</h3>
+
+<p>Recall the definition of the ordinary least squares estimator <script type="math/tex">\hat{\beta}_{OLS}</script>:</p>
+
+<script type="math/tex; mode=display">\hat{\beta}_{OLS} = argmin_{\text{all possible }\hat{\beta}s} S(\hat{\beta})</script>
+
+<p>where <script type="math/tex">S</script> is the sum of squares distance away from the observed <script type="math/tex">y</script>, that is</p>
+
+<script type="math/tex; mode=display">S(\hat{\beta}) = \sum_i^n (y - x_i^T\hat{\beta})^2 = (y -X\hat{\beta})^T(y -X\hat{\beta})</script>
+
+<p>We can sketch out contour lines around y that maintain the same sum of squares distances from <script type="math/tex">y</script>. These points form a circle because the definition of a circle, <script type="math/tex">x^2 + y^2 = constant</script>, is exactly the points that hold sum of squares constant. The smallest circle to touch the <script type="math/tex">X</script> plane touches it a tangent. At this point, both the curve and the <script type="math/tex">X</script> plane have the same gradient, so the normal line to the plane must point where the normal line of the curve is pointing, which is directly at <script type="math/tex">y</script> in the center of the circle.</p>
+
+<p><img src="img/tangent.png" /></p>
+
+<h3 id="now-we-know-how-the-ols-estimator-looks-like-geometrically-why-does-gauss-markov-say-it-is-best">Now we know how the OLS estimator looks like geometrically. Why does Gauss-Markov say it is best?</h3>
+
+<p>The metric that the Gauss-Markov theorem uses to evaluate estimators is mean squared error. As with OLS, the squared error is the standard Euclidean distance we know and love. But instead of simply going through each of the possible values of <script type="math/tex">X\hat{\beta}_{OLS}</script> in the projected area and summing their distances from the One True <script type="math/tex">X\beta</script>, we have to find the mean and that requires us to weigh each distance by the probability of obtaining that value of <script type="math/tex">X\hat{\beta}_{OLS}</script>.</p>
+
+<p>Visualizing this metric is difficult because of the probabilty weights. The most naive approach using size of the area isn’t good enough because it neglects the probabilities. Instead, we can think of the metric as rotational mass, or what physicists call “moment of inertia”. Imagine the <script type="math/tex">X\hat{\beta}</script>s as little unit volumes, their probabilities as their mass densities, and their distance from <script type="math/tex">X\beta</script> as their radius of rotation. A good area under the Gauss-Markov theorem, would thus have a small moment of inertia when spun about <script type="math/tex">X\beta</script>.</p>
+
+<p>The Gauss-Markov theorem says that when the noise is distributed as a sphere centered around <script type="math/tex">X\beta</script>, the orthogonal projection (the OLS estimator) gives an area with the smallest moment of inertia.</p>
+
+<p>We can get a sense for why this is true by looking at a non-orthogonal projection. The diagram shows that the sphere is projected onto an ellipse which has a higher moment of intertia than the circle.</p>
+
+<p><img src="img/badprojection.png" /></p>
+
+<h3 id="i-noticed-that-the-formal-conditions-of-gauss-markov-are-that-mathbbeepsilon--0-and-mathbbvarepsilon--sigma2-i-how-does-this-translate-into-a-sphere-centered-on-xbeta">I noticed that the formal conditions of Gauss-Markov are that <script type="math/tex">\mathbb{E}(\epsilon) = 0</script> and <script type="math/tex">\mathbb{Var}(\epsilon) = \sigma^2 I</script>. How does this translate into a sphere centered on <script type="math/tex">X\beta</script>?</h3>
+
+<p>Continuing the idea of expectations as masses, <script type="math/tex">\mathbb{E}(\epsilon) = 0</script> tells us that the mass of the epsilons are centered at 0. Since <script type="math/tex">y = X\beta + \epsilon</script>, it means that the <script type="math/tex">y</script> cloud is a sphere centered at <script type="math/tex">X\beta</script>.</p>
+
+<p><script type="math/tex">\mathbb{Var}(\epsilon) = \sigma^2 I</script> is a standard covariance matrix and it describes the shape of the cloud. The diagonal elements tell us the variance in one dimension, since all the of them are <script type="math/tex">\sigma^2</script>, we know that the variation of the cloud along each of the axes is the same. The off-diagonal terms tell us if there is extra stretching between axes. Here they are null, so we know that the variation is the same in all directions which is exactly what a sphere is.</p>
+
+<p>Anatomy of a covariance matrix:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\mathbb{Var}(Z) =
+\begin{bmatrix}
+    Var(z_1) & Cov(z_1, z_2)  & \dots  & Cov(z_1, z_n) \\
+    Cov(z_2, z_1) & Var(z_2)  & \dots  & Cov(z_2, z_n) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    Cov(z_n, z_1) & Cov(z_n, z_2) & \dots  & Var(z_n)
+\end{bmatrix} %]]></script>
+
+<h3 id="do-we-know-why-gauss-markov-requires-the-centered-sphere-assumption-why-does-the-theorem-break-down-without-it">Do we know why Gauss-Markov requires the centered sphere assumption? Why does the theorem break down without it?</h3>
+
+<p>This is where we can use this geometric environment to explore the Gauss-Markov theorem. Say we were to break the centering assumption, that <script type="math/tex">\mathbb{E}(\epsilon) = 0</script>. The <script type="math/tex">\epsilon</script> and it’s projection would no longer be centered around <script type="math/tex">X\beta</script>. One could conceive of a non-orthogonal projection that casts the sphere’s shadow back around <script type="math/tex">X\beta</script> resulting in a lower moment of inertia about <script type="math/tex">X\beta</script>.</p>
+
+<p>(Talk about fixing by retilting X?)</p>
+
+<p>We can break the spherical assumption by supposing <script type="math/tex">\epsilon</script> to be an ellipsoid. The orthogonal projection results in an ellipse. But if we can imagine how a non-orthogonal projection that is lined up with the major axis of the ellipsoid can cast a smaller area around <script type="math/tex">X\beta</script>, again resulting in lower moment of inertia.</p>
+
+<p>In both of these cases, we see that the OLS orthogonal projection is no longer the best.</p>
+
+<h3 id="we-understand-the-centered-sphere-assumption-is-necessary-what-about-the-other-constraints-placed-by-gauss-markov-why-cant-ols-compete-with-non-linear-or-biased-estimators">We understand the centered sphere assumption is necessary. What about the other constraints placed by Gauss-Markov? Why can’t OLS compete with non-linear or biased estimators?</h3>
+
 
       </div>
       <div class="footer">
