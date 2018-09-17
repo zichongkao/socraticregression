@@ -9,13 +9,13 @@ It is an attempt to develop an intuitive understanding of linear regression usin
 
 ### What’s this Gauss-Markov theorem you speak of? How is it relevant to linear regression?
 
-The Gauss-Markov theorem is a good jump-off point from which to learn about linear regression. There are many ways to fit a line through data, of which ordinary least squares (OLS) is the most well-known. (What! I didn’t realize there are other ways to fit a line?! What are some examples? Generalized least squares (GLS), maximum likelihood estimation (MLE), etc.) The Gauss-Markov theorem explains that under certain conditions, OLS is the “best” method to use.
+The Gauss-Markov theorem is a good jump-off point from which to learn about linear regression. There are many ways to fit a line through data, of which ordinary least squares (OLS) is the most well-known. (What are some examples? Generalized least squares (GLS), maximum likelihood estimation (MLE), etc.) The Gauss-Markov theorem explains that under certain conditions, OLS is the “best” method to use.
 
 This is interesting in two ways. First, it helps us understand why everyone seems to like using OLS when doing linear regression. Second, like a big fish in a small pond, OLS is only best in a very narrow sense — it requires several strong conditions and is only best in a small class of methods. By tearing down the various conditions and probing why it can’t compete outside of its class, we end up with a good understanding of linear regression.
 
 ### So what does it mean for OLS to be “best”? And what the conditions are required for this?
 
-Recall, the problem of linear regression says: Suppose we have data that is generated in the secret control room of the universe** by the function $$X\beta + \epsilon$$. What is the best way to find $$\beta$$? Remember that as mere mortals, we can never peek into the secret control room of the universe (SCRU). We can only observe $$y$$, final result of $$X\beta + \epsilon$$, and $$X$$ which are our inputs. $$\beta$$ is top secret so we can’t just read it off our observations, and $$\epsilon$$ is a random variable which prevents us from deducing \beta from what we know. We are forced to guess what it is and this process of guessing parameters of underlying models is known in statistics as “estimation”.
+Recall, the problem of linear regression says: Suppose we have data that is generated in the secret control room of the universe** by the function $$X\beta + \epsilon$$. What is the best way to find $$\beta$$? Remember that as mere mortals, we can never peek into the secret control room of the universe (SCRU). We can only observe $$y$$, final result of $$X\beta + \epsilon$$, and $$X$$ which are our inputs. $$\beta$$ is top secret so we can’t just read it off our observations, and $$\epsilon$$ is a random variable which prevents us from deducing $$\beta$$ from what we know. We are forced to guess what it is and this process of guessing parameters of underlying models is known in statistics as “estimation”.
 
 The Gauss-Markov theorem says: This problem is way too hard. I can’t tell you the best estimator for $$\beta$$ in all cases; but for the cases where the noise $$\epsilon$$ is distributed with $$\mathbb{E}(\epsilon) = 0$$ and $$\mathbb{Var}(\epsilon) = \sigma^2 I$$, then I can tell you that OLS is the best among the class of *linear*, *unbiased* estimators.
 
@@ -31,7 +31,7 @@ We start with a 3 dimensional space with a plane in it. The plane represents the
 
 One superficial view of the $$X$$ matrix is as a store of data where each row stores the covariates of a single data point. $$X$$ is tall and skinny because it must have at least as many data points as it has covariates. This is reminiscent of what we know from high school algebra about systems of equations. Each equations provides information about the relationship between the inputs and outputs, and if we have more unknowns than we have equations, we won’t have enough information to find a unique solution for the unknowns.
 
-[diagram showing shapes of y = X\beta]
+<img src="img/matshape.png" style="width:80%">
 
 We can also view $$X$$ as a linear transformation since we can feed it a vector and have it spit out another. More concretely, it takes in a $$\beta$$ vector and uses the vector’s components as weights for building a linear combination of its columns. This linear combination is then output as the vector of predictions $$y$$. I like to think of $$X$$ as a fridge where each column is an ingredient. $$\beta$$ is a recipe which tells us how much of each ingredient to mix together.
 
@@ -100,6 +100,8 @@ We can sketch out contour lines around y that maintain the same sum of squares d
 The metric that the Gauss-Markov theorem uses to evaluate estimators is mean squared error. As with OLS, the squared error is the standard Euclidean distance we know and love. But instead of simply going through each of the possible values of $$X\hat{\beta}_{OLS}$$ in the projected area and summing their distances from the One True $$X\beta$$, we have to find the mean and that requires us to weigh each distance by the probability of obtaining that value of $$X\hat{\beta}_{OLS}$$.
 
 Visualizing this metric is difficult because of the probabilty weights. The most naive approach using size of the area isn't good enough because it neglects the probabilities. Instead, we can think of the metric as rotational mass, or what physicists call "moment of inertia". Imagine the $$X\hat{\beta}$$s as little unit volumes, their probabilities as their mass densities, and their distance from $$X\beta$$ as their radius of rotation. A good area under the Gauss-Markov theorem, would thus have a small moment of inertia when spun about $$X\beta$$.
+
+<img src="img/momentofinertia.png">
 
 The Gauss-Markov theorem says that when the noise is distributed as a sphere centered around $$X\beta$$, the orthogonal projection (the OLS estimator) gives an area with the smallest moment of inertia.
 
