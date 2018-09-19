@@ -136,7 +136,9 @@
 
 <h3 id="do-we-know-why-gauss-markov-requires-the-centered-sphere-assumption-why-does-the-theorem-break-down-without-it">Do we know why Gauss-Markov requires the centered sphere assumption? Why does the theorem break down without it?</h3>
 
-<p>This is where we can use this geometric environment to explore the Gauss-Markov theorem. Say we were to break the centering assumption, that <script type="math/tex">\mathbb{E}(\epsilon) = 0</script>. The <script type="math/tex">\epsilon</script> and it’s projection would no longer be centered around <script type="math/tex">X\beta</script>. One could conceive of a non-orthogonal projection that casts the sphere’s shadow back around <script type="math/tex">X\beta</script> resulting in a lower moment of inertia about <script type="math/tex">X\beta</script>.</p>
+<p>This is where we can use this geometric environment to explore the Gauss-Markov theorem. Say we were to break the centering assumption, that <script type="math/tex">\mathbb{E}(\epsilon) = 0</script>. The <script type="math/tex">\epsilon</script> and its projection would no longer be centered around <script type="math/tex">X\beta</script>. Immediately, we run into the problem that <script type="math/tex">X\hat{\beta}_{OLS}</script> is no longer an unbiased estimator since the center of mass of the area lies away from <script type="math/tex">X\beta</script>. Even if we were to ignore this, the OLS estimator is no longer the best: We can construct a non-orthogonal projection that projects the sphere back around <script type="math/tex">X\beta</script> resulting in a lower moment of inertia about $$X\beta$.</p>
+
+<p><img src="img/offcenterols.png" /></p>
 
 <p>(Talk about fixing by retilting X?)</p>
 
