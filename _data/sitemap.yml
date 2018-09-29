@@ -1,0 +1,25 @@
+contents:
+- title: Linear Regression
+  url: space.html
+  blurb: "Introducing the space and main objects in it"
+  sections:
+  - name: The Gauss-Markov Theorem
+    url: "#gaussmarkov"
+  - name: The X Plane
+    url: "#xplane"
+  - name: The Epsilon Sphere
+    url: "#epsilonsphere"
+- title: Ordinary Least Squares
+  url: ols.html
+  blurb: "Visualizing how the Gauss-Markov theorem concludes OLS is best"
+  sections:
+  - name: OLS as Orthogonal Projection
+    url: "#orthogonal"
+  - name: What does it mean to be best?
+    url: "#best"
+  - name: Shape of Epsilon
+    url: "#epsilonshape"
+  - name: Deconstructing the assumptions
+    url: "#assumptions"
+  - name: Linearity
+    url: "#linearity"

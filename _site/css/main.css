@@ -33,6 +33,16 @@ p {
     font-family: 'Libre Baskerville', serif;
 }
 
+/* hyperlinks */
+a {
+    color: #07a;
+    text-decoration: none;
+}
+
+a:hover {
+    background: #f2f8fa;
+}
+
 /* general */
 html {
     font-size: 18px;
@@ -94,4 +104,71 @@ body #column {
     font-family: 'Roboto',sans-serif;
     color: #333;
     font-weight: 200;
+}
+
+/* sideNote */
+.sideNote {
+    margin: 1em 0em;
+    padding-left: 1em;
+    font-size: 0.9em;
+    border-left: 2px solid grey;
+}
+
+/* index page */
+.index_section {
+    margin-top: 1em;
+}
+
+.index_section p{
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    font-weight: 200;
+    line-height: 120%;
+}
+
+/* tutorial nav links */
+.section-nav {
+    color: #1b1e23;
+    font-family: Roboto, sans-serif;
+    font-size: 1.2em;
+    line-height: 150%;
+    margin-bottom: 2em;
+}
+
+.section-nav .section-sib {
+    margin-left: 1em;
+}
+
+.section-nav .section-sib a.here {
+    background: #fbfbfb;
+    font-weight: bolder;
+}
+
+.section-nav .cur-text {
+    display: inline-block;
+    font-weight: 700;
+}
+
+.section-nav .childlinks {
+    margin-left: 3em;
+    font-weight: 200;
+}
+
+.section-nav .childlinks a.here {
+    background: #fbfbfb;
+    font-weight: bolder;
+}
+
+.tutorial-nav {
+    margin-top: 2em;
+}
+
+.tutorial-nav  .previous {
+    float: left;
+    max-width: 50%;
+}
+
+.tutorial-nav  .next {
+    float: right;
+    max-width: 50%;
 }
